@@ -5,7 +5,7 @@ from tkinter import ttk
 root=Tk()
 root.title("Automate Whatsapp")
 root.geometry("800x900+150+100")
-# root.wm_iconbitmap("whatsicon.ico")
+
 root.resizable(False,False)
  
 # name of the app
@@ -16,15 +16,29 @@ titlename.pack(side=TOP)
 # send button fucntion
 def sendd():
     mssg=messageentry.get(1.0,'end-1c')
-    if phoneval.get() and str(hourval.get()) and str(minval.get()) and mssg:
-        
+    if phoneval.get() and str(hourval.get()) and str(minval.get()) and mssg:  
         pwk.sendwhatmsg(phoneval.get(),mssg,int(hourval.get()),int(minval.get()),15,00)
-        data.config(text="message sent",font=('arial',15,'italic'))
+        data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
+        data.grid(row=7,column=1,padx=15,pady=12,sticky=W)
+        data.config(text="message sent")
+    
     else:
+        data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
+        data.grid(row=7,column=1,padx=15,pady=12,sticky=W)
         data.config(text="enter detail properly")
 
 def group():
-    pass
+    mssg=messageentry.get(1.0,'end-1c')
+    if groupnval.get() and str(hourval.get()) and str(minval.get()) and mssg: 
+        pwk.sendwhatmsg_to_group(groupnval.get(),mssg,int(hourval.get()),int(minval.get()),15,00)
+        data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
+        data.grid(row=7,column=1,padx=15,pady=12,sticky=W)
+        data.config(text="message sent")
+    
+    else:
+        data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
+        data.grid(row=7,column=1,padx=15,pady=12,sticky=W)
+        data.config(text="enter detail properly")
    
 # frames
 frames=Frame(root,bd=3,relief=RAISED,bg='lightgreen')
@@ -43,7 +57,7 @@ phoneentry=Entry(frames,textvariable=phoneval,bg='lightgray',fg="Green",bd=3,rel
 phoneentry.grid(row=0,column=1)
 
 #enter the name og group
-groupname=Label(frames,text="Group Name : ",font=('arial',18,'bold'),bg='lightgray',width=15 ,fg="Green")
+groupname=Label(frames,text="Group adminID  : ",font=('arial',18,'bold'),bg='lightgray',width=15 ,fg="Green")
 groupname.grid(row=1,column=0,padx=16,pady=10)
 
 Groupentry=Entry(frames,textvariable=groupnval,bg='lightgray',fg="Green",bd=3,relief=RAISED,width=16,font=('arial',18,'italic'),highlightthickness=2,highlightcolor='blue')
@@ -79,15 +93,9 @@ minval.set('--select option--')
 btn=Button(frames,text='Send Message',command=sendd, width=18,font=('times new roman',15,'bold'),bg='blue',fg='white',activebackground='white',activeforeground='blue',highlightthickness=2 , highlightcolor='black')
 btn.grid(row=6, column=0,sticky=E)
 
-data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
-data.grid(row=7,column=1,padx=15,pady=12,sticky=W)
-
-
 # send button mssg
-btn=Button(frames,text='Send Message Group',command=group, width=18,font=('times new roman',15,'bold'),bg='blue',fg='white',activebackground='white',activeforeground='blue',highlightthickness=2 , highlightcolor='black')
+btn=Button(frames,text='Send Group Message',command=group, width=18,font=('times new roman',15,'bold'),bg='blue',fg='white',activebackground='white',activeforeground='blue',highlightthickness=2 , highlightcolor='black')
 btn.grid(row=6,column=1,sticky=W)
 
-data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
-data.grid(row=7,column=1,padx=15,pady=12,sticky=W)
 
 root.mainloop()
