@@ -75,45 +75,6 @@ def mssgpersonal():
     btn=Button(frames,text='Send Message',command=sendd, width=18,font=('times new roman',15,'bold'),bg='blue',fg='white',activebackground='white',activeforeground='blue',highlightthickness=2 , highlightcolor='black')
     btn.grid(row=6, column=0,sticky=E)
 
-#  whatsapp message send personally instantly
-def mssgpersonalinstant():
-    # send button fucntion
-    def sendd():
-        mssg=messageentry.get(1.0,'end-1c')
-        if phoneval.get() and mssg:  
-            pwk.sendwhatmsg_instantly(phoneval.get(),mssg)
-            data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
-            data.grid(row=5,column=1,padx=15,pady=12,sticky=W)
-            data.config(text="message sent")
-        
-        else:
-            data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
-            data.grid(row=5,column=1,padx=15,pady=12,sticky=W)
-            data.config(text="enter detail properly")
-
-    frames=Frame(root,bg='lightgreen')
-    frames.place(x=23,y=250,width=850,height=700)
-    
-    phoneval=StringVar()
-
-    # enter phone number
-    phoneno=Label(frames,text="Phone number : ",font=('arial',18,'bold'),bg='lightgray',width=15 ,fg="Green")
-    phoneno.grid(row=1,column=0,padx=16,pady=10)
-
-    phoneentry=Entry(frames,textvariable=phoneval,bg='lightgray',fg="Green",bd=3,relief=RAISED,width=16,font=('arial',18,'italic'),highlightthickness=2,highlightcolor='blue')
-    phoneentry.grid(row=1,column=1)
-
-    # enter the message u need to send
-    message=Label(frames,text="Message Send : ",font=('arial',18,'bold'),bg='lightgray',width=15 ,fg="Green")
-    message.grid(row=2,column=0,padx=10,pady=16)
-
-    messageentry=Text(frames,font=('arial',18,'italic'),bg='lightgray',width=16,height=7,fg='green',highlightthickness=2,highlightcolor='blue',bd=3,relief=RAISED)
-    messageentry.grid(row=2,column=1)
-
-    # send button personally
-    btn=Button(frames,text='Send Message',command=sendd, width=18,font=('times new roman',15,'bold'),bg='blue',fg='white',activebackground='white',activeforeground='blue',highlightthickness=2 , highlightcolor='black')
-    btn.grid(row=4, column=0,sticky=E)
-
 # whatsapp group message send at given time
 def groupmssgtime():        
     def group():
@@ -212,7 +173,7 @@ def groupmssgtimeinstant():
     btn=Button(frames,text='Send Group Message',command=group, width=18,font=('times new roman',15,'bold'),bg='blue',fg='white',activebackground='white',activeforeground='blue',highlightthickness=2 , highlightcolor='black')
     btn.grid(row=3,column=1,sticky=W)
 
-# personal list mssg
+# personal list mssg instantly
 def personallistmssg():
     l,i=[],0
 
@@ -279,16 +240,13 @@ frames.place(x=10,y=68,width=880,height=925)
 btn=Button(frames,text='Personal Message ',command=mssgpersonal, width=14,font=('times new roman',12,'bold'),bg='lightgray',fg='black',activebackground='lightgray',activeforeground='black',highlightthickness=2 , highlightcolor='black')
 btn.grid(row=0,column=0,sticky=W)
 
-btn=Button(frames,text='Personal MssgInstant' ,command=mssgpersonalinstant, width=16,font=('times new roman',12,'bold'),bg='lightgray',fg='black',activebackground='lightgray',activeforeground='black',highlightthickness=2 , highlightcolor='black')
+btn=Button(frames,text='Personal MssgInstant' ,command=personallistmssg, width=16,font=('times new roman',12,'bold'),bg='lightgray',fg='black',activebackground='lightgray',activeforeground='black',highlightthickness=2 , highlightcolor='black')
 btn.grid(row=0,column=1,sticky=W)
 
 btn=Button(frames,text='Group Message ',command=groupmssgtime, width=14,font=('times new roman',12,'bold'),bg='lightgray',fg='black',activebackground='lightgray',activeforeground='black',highlightthickness=2 , highlightcolor='black')
 btn.grid(row=0,column=2,sticky=W)
 
-btn=Button(frames,text='Group Mssginstantly ',command=groupmssgtimeinstant, width=16,font=('times new roman',12,'bold'),bg='lightgray',fg='black',activebackground='lightgray',activeforeground='black',highlightthickness=2 , highlightcolor='black')
+btn=Button(frames,text='Group Mssginstanly ',command=groupmssgtimeinstant, width=16,font=('times new roman',12,'bold'),bg='lightgray',fg='black',activebackground='lightgray',activeforeground='black',highlightthickness=2 , highlightcolor='black')
 btn.grid(row=0,column=3,sticky=W)
-
-btn=Button(frames,text='Personal MssgList',command=personallistmssg, width=14,font=('times new roman',12,'bold'),bg='lightgray',fg='black',activebackground='lightgray',activeforeground='black',highlightthickness=2 , highlightcolor='black')
-btn.grid(row=1,column=0,sticky=W)
 
 root.mainloop()
