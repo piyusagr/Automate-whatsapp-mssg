@@ -4,7 +4,7 @@ from tkinter import ttk
 
 root=Tk()
 root.title("Automate Whatsapp")
-root.geometry("900x1000+150+50")
+root.geometry("900x950+150+50")
 
 root.resizable(False,False)
  
@@ -16,162 +16,239 @@ titlename.pack(side=TOP)
 
 #  whatsapp message send personally at given time
 def mssgpersonal():
+    l,i=[],0
+
     # send button fucntion
     def sendd():
         mssg=messageentry.get(1.0,'end-1c')
-        if phoneval.get() and str(hourval.get()) and str(minval.get()) and mssg:  
-            pwk.sendwhatmsg(phoneval.get(),mssg,int(hourval.get()),int(minval.get()),15,00)
-            data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
-            data.grid(row=7,column=1,padx=15,pady=12,sticky=W)
-            data.config(text="message sent")
-        
-        else:
-            data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
-            data.grid(row=7,column=1,padx=15,pady=12,sticky=W)
-            data.config(text="enter detail properly")
+        for phone in l:
+            if phoneval.get() and str(hourval.get()) and str(minval.get()) and mssg:  
+                pwk.sendwhatmsg(phoneval.get(),mssg,int(hourval.get()),int(minval.get()),15,00)
+                data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
+                data.grid(row=7,column=1,padx=15,pady=12,sticky=W)
+                data.config(text="message sent")
             
+            else:
+                data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
+                data.grid(row=7,column=1,padx=15,pady=12,sticky=W)
+                data.config(text="enter detail properly")
+        l.clear()
+
+    def morenumber():
+        nonlocal i
+        if len(l)==9:
+            btn['state']=DISABLED
+
+        
+        phoneno=Label(frames,text="Phone number : ",font=('arial',16,'bold'),bg='lightgray',width=13 ,fg="Green")
+        phoneno.grid(row=2,column=0,padx=16,pady=10)
+        phoneentry=Entry(frames,textvariable=phoneval,bg='lightgray',fg="Green",bd=3,relief=RAISED,width=15,font=('arial',16,'italic'),highlightthickness=2,highlightcolor='blue')
+        phoneentry.grid(row=2,column=1)
+        if len(l)<=10:
+            data=Label(frames,text="" , font=('arial',14,'bold'), width=15,fg='Gray')
+            data.grid(row=i,column=2,padx=15,pady=12,sticky=W)
+            data.config(text=phoneentry.get())
+            i+=1
+            l.append(phoneentry.get())
+            # print(l)
+                  
     # frames
     frames=Frame(root,bg='lightgreen')
-    frames.place(x=23,y=250,width=850,height=700)
+    frames.place(x=18,y=120,width=867,height=820)
 
     phoneval=StringVar()
     hourval=StringVar()
     minval=StringVar()
+    
+    # add more phone number option
+    btn=Button(frames,text='Add more number',command=morenumber, width=18,font=('times new roman',12,'bold'),bg='blue',fg='white',activebackground='white',activeforeground='blue',highlightthickness=2 , highlightcolor='black')
+    btn.grid(row=1,column=1,sticky=E)
 
     # enter phone number
-    phoneno=Label(frames,text="Phone number : ",font=('arial',18,'bold'),bg='lightgray',width=15 ,fg="Green")
-    phoneno.grid(row=1,column=0,padx=16,pady=10)
+    phoneno=Label(frames,text="Phone number : ",font=('arial',16,'bold'),bg='lightgray',width=13 ,fg="Green")
+    phoneno.grid(row=2,column=0,padx=16,pady=10)
 
-    phoneentry=Entry(frames,textvariable=phoneval,bg='lightgray',fg="Green",bd=3,relief=RAISED,width=16,font=('arial',18,'italic'),highlightthickness=2,highlightcolor='blue')
-    phoneentry.grid(row=1,column=1)
+    phoneentry=Entry(frames,textvariable=phoneval,bg='lightgray',fg="Green",bd=3,relief=RAISED,width=15,font=('arial',16,'italic'),highlightthickness=2,highlightcolor='blue')
+    phoneentry.grid(row=2,column=1)
 
     # enter the message u need to send
-    message=Label(frames,text="Message Send : ",font=('arial',18,'bold'),bg='lightgray',width=15 ,fg="Green")
-    message.grid(row=2,column=0,padx=10,pady=16)
+    message=Label(frames,text="Message Send : ",font=('arial',16,'bold'),bg='lightgray',width=13 ,fg="Green")
+    message.grid(row=3,column=0,padx=10,pady=16)
 
-    messageentry=Text(frames,font=('arial',18,'italic'),bg='lightgray',width=16,height=7,fg='green',highlightthickness=2,highlightcolor='blue',bd=3,relief=RAISED)
-    messageentry.grid(row=2,column=1)
+    messageentry=Text(frames,font=('arial',16,'italic'),bg='lightgray',width=15,height=7,fg='green',highlightthickness=2,highlightcolor='blue',bd=3,relief=RAISED)
+    messageentry.grid(row=3,column=1)
 
     # enter the hour and minute to be send at that time
     # hour
-    hour=Label(frames,text="Hours : ",font=('arial',18,'bold'),bg='lightgray', width=15,fg='green')
-    hour.grid(row=3,column=0,padx=16,pady=10)
+    hour=Label(frames,text="Hours : ",font=('arial',16,'bold'),bg='lightgray', width=13,fg='green')
+    hour.grid(row=4,column=0,padx=16,pady=10)
 
     options=[i for i in range(1,25)]
-    hourentry= ttk.Combobox(frames,textvariable=hourval,values=options,width=15,height=20,justify=CENTER,font=('arial',18,'italic'))
-    hourentry.grid(row=3,column=1,padx=16,pady=10)
+    hourentry= ttk.Combobox(frames,textvariable=hourval,values=options,width=15,height=20,justify=CENTER,font=('arial',15,'italic'))
+    hourentry.grid(row=4,column=1,padx=16,pady=10)
     hourval.set('--select option--')
 
     # minute
-    minutes=Label(frames,text="Minute : ",font=('arial',18,'bold'),bg='lightgray', width=15,fg='green')
-    minutes.grid(row=4,column=0,padx=16,pady=10)
+    minutes=Label(frames,text="Minute : ",font=('arial',16,'bold'),bg='lightgray', width=13,fg='green')
+    minutes.grid(row=5,column=0,padx=16,pady=10)
 
     optiond=[i for i in range(1,61)]
-    minuteentry= ttk.Combobox(frames,textvariable=minval,values=optiond,width=15,height=20,justify=CENTER,font=('arial',18,'italic'))
-    minuteentry.grid(row=4,column=1,padx=16,pady=10)
+    minuteentry= ttk.Combobox(frames,textvariable=minval,values=optiond,width=15,height=20,justify=CENTER,font=('arial',15,'italic'))
+    minuteentry.grid(row=5,column=1,padx=16,pady=10)
     minval.set('--select option--')
 
     # send button personally
-    btn=Button(frames,text='Send Message',command=sendd, width=18,font=('times new roman',15,'bold'),bg='blue',fg='white',activebackground='white',activeforeground='blue',highlightthickness=2 , highlightcolor='black')
-    btn.grid(row=6, column=0,sticky=E)
+    btns=Button(frames,text='Send Message',command=sendd, width=13,font=('times new roman',16,'bold'),bg='blue',fg='white',activebackground='white',activeforeground='blue',highlightthickness=2 , highlightcolor='black')
+    btns.grid(row=6, column=0,sticky=E)
 
 # whatsapp group message send at given time
-def groupmssgtime():        
+def groupmssgtime(): 
+    l,i=[],0   
+
     def group():
         mssg=messageentry.get(1.0,'end-1c')
-        if groupnval.get() and str(hourval.get()) and str(minval.get()) and mssg: 
-            pwk.sendwhatmsg_to_group(groupnval.get(),mssg,int(hourval.get()),int(minval.get()),15,00)
-            data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
-            data.grid(row=7,column=1,padx=15,pady=12,sticky=W)
-            data.config(text="message sent")
+        for phone in l: 
+            if groupnval.get() and str(hourval.get()) and str(minval.get()) and mssg: 
+                pwk.sendwhatmsg_to_group(groupnval.get(),mssg,int(hourval.get()),int(minval.get()),15,00)
+                data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
+                data.grid(row=7,column=1,padx=15,pady=12,sticky=W)
+                data.config(text="message sent")
+
+            else:
+                data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
+                data.grid(row=7,column=1,padx=15,pady=12,sticky=W)
+                data.config(text="enter detail properly")
+        l.clear()
+    
+    def morenumber():
+        nonlocal i
+        if len(l)==9:
+            btn['state']=DISABLED
+
         
-        else:
-            data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
-            data.grid(row=7,column=1,padx=15,pady=12,sticky=W)
-            data.config(text="enter detail properly")
+        groupname=Label(frames,text="Group adminid:",font=('arial',16,'bold'),bg='lightgray',width=13 ,fg="Green")
+        groupname.grid(row=1,column=0,padx=16,pady=10)
+        Groupentry=Entry(frames,textvariable=groupnval,bg='lightgray',fg="Green",bd=3,relief=RAISED,width=15,font=('arial',16,'italic'),highlightthickness=2,highlightcolor='blue')
+        Groupentry.grid(row=1,column=1)
+        if len(l)<=10:
+            data=Label(frames,text="" , font=('arial',14,'bold'), width=15,fg='Gray')
+            data.grid(row=i,column=2,padx=15,pady=12,sticky=W)
+            data.config(text=Groupentry.get())
+            i+=1
+            l.append(Groupentry.get())
+            # print(l)
 
     frames=Frame(root,bg='lightgreen')
-    frames.place(x=23,y=250,width=850,height=700)
+    frames.place(x=18,y=120,width=867,height=820)
 
     groupnval=StringVar()
     hourval=StringVar()
     minval=StringVar()
 
+    # add more phone number option
+    btn=Button(frames,text='Add more number',command=morenumber, width=18,font=('times new roman',12,'bold'),bg='blue',fg='white',activebackground='white',activeforeground='blue',highlightthickness=2 , highlightcolor='black')
+    btn.grid(row=1,column=1,sticky=E)
+
      #enter the name og group
-    groupname=Label(frames,text="Group adminID  : ",font=('arial',18,'bold'),bg='lightgray',width=15 ,fg="Green")
-    groupname.grid(row=1,column=0,padx=16,pady=10)
+    groupname=Label(frames,text="Group Adminid:",font=('arial',16,'bold'),bg='lightgray',width=13 ,fg="Green")
+    groupname.grid(row=2,column=0,padx=16,pady=10)
 
-    Groupentry=Entry(frames,textvariable=groupnval,bg='lightgray',fg="Green",bd=3,relief=RAISED,width=16,font=('arial',18,'italic'),highlightthickness=2,highlightcolor='blue')
-    Groupentry.grid(row=1,column=1)
-
+    Groupentry=Entry(frames,textvariable=groupnval,bg='lightgray',fg="Green",bd=3,relief=RAISED,width=15,font=('arial',16,'italic'),highlightthickness=2,highlightcolor='blue')
+    Groupentry.grid(row=2,column=1)
+    
     # enter the message u need to send
-    message=Label(frames,text="Message Send : ",font=('arial',18,'bold'),bg='lightgray',width=15 ,fg="Green")
-    message.grid(row=2,column=0,padx=10,pady=16)
+    message=Label(frames,text="Message Send : ",font=('arial',16,'bold'),bg='lightgray',width=13 ,fg="Green")
+    message.grid(row=3,column=0,padx=16,pady=10)
 
-    messageentry=Text(frames,font=('arial',18,'italic'),bg='lightgray',width=16,height=7,fg='green',highlightthickness=2,highlightcolor='blue',bd=3,relief=RAISED)
-    messageentry.grid(row=2,column=1)
+    messageentry=Text(frames,font=('arial',16,'italic'),bg='lightgray',width=15,height=7,fg='green',highlightthickness=2,highlightcolor='blue',bd=3,relief=RAISED)
+    messageentry.grid(row=3,column=1)
 
     # enter the hour and minute to be send at that time
     # hour
-    hour=Label(frames,text="Hours : ",font=('arial',18,'bold'),bg='lightgray', width=15,fg='green')
-    hour.grid(row=3,column=0,padx=16,pady=10)
+    hour=Label(frames,text="Hours : ",font=('arial',16,'bold'),bg='lightgray', width=13,fg='green')
+    hour.grid(row=4,column=0,padx=16,pady=10)
 
     options=[i for i in range(1,25)]
-    hourentry= ttk.Combobox(frames,textvariable=hourval,values=options,width=15,height=20,justify=CENTER,font=('arial',18,'italic'))
-    hourentry.grid(row=3,column=1,padx=16,pady=10)
+    hourentry= ttk.Combobox(frames,textvariable=hourval,values=options,width=13,height=20,justify=CENTER,font=('arial',16,'italic'))
+    hourentry.grid(row=4,column=1,padx=16,pady=10)
     hourval.set('--select option--')
 
     # minute
-    minutes=Label(frames,text="Minute : ",font=('arial',18,'bold'),bg='lightgray', width=15,fg='green')
-    minutes.grid(row=4,column=0,padx=16,pady=10)
+    minutes=Label(frames,text="Minute : ",font=('arial',16,'bold'),bg='lightgray', width=13,fg='green')
+    minutes.grid(row=5,column=0,padx=16,pady=10)
 
     optiond=[i for i in range(1,61)]
-    minuteentry= ttk.Combobox(frames,textvariable=minval,values=optiond,width=15,height=20,justify=CENTER,font=('arial',18,'italic'))
-    minuteentry.grid(row=4,column=1,padx=16,pady=10)
+    minuteentry= ttk.Combobox(frames,textvariable=minval,values=optiond,width=13,height=20,justify=CENTER,font=('arial',16,'italic'))
+    minuteentry.grid(row=5,column=1,padx=16,pady=10)
     minval.set('--select option--')
     
     # send button mssg
-    btn=Button(frames,text='Send Group Message',command=group, width=18,font=('times new roman',15,'bold'),bg='blue',fg='white',activebackground='white',activeforeground='blue',highlightthickness=2 , highlightcolor='black')
-    btn.grid(row=6,column=1,sticky=W)
+    btns=Button(frames,text='Send Group Message',command=group, width=15,font=('times new roman',14,'bold'),bg='blue',fg='white',activebackground='white',activeforeground='blue',highlightthickness=2 , highlightcolor='black')
+    btns.grid(row=7,column=1,sticky=W)
 
 
 # whatsapp group message send instantly
-def groupmssgtimeinstant():        
+def groupmssgtimeinstant():  
+    l,i=[],0      
     def group():
         mssg=messageentry.get(1.0,'end-1c')
-        if groupnval.get() and mssg: 
-            pwk.sendwhatmsg_to_group_instantly(groupnval.get(),mssg)
-            data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
-            data.grid(row=4,column=1,padx=15,pady=12,sticky=W)
-            data.config(text="message sent")
+        for i in l:
+            if groupnval.get() and mssg: 
+                pwk.sendwhatmsg_to_group_instantly(groupnval.get(),mssg)
+                data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
+                data.grid(row=4,column=1,padx=15,pady=12,sticky=W)
+                data.config(text="message sent")
+
+            else:
+                data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
+                data.grid(row=4,column=1,padx=15,pady=12,sticky=W)
+                data.config(text="enter detail properly")
+        l.clear()
+    
+    def morenumber():
+        nonlocal i
+        if len(l)==9:
+            btn['state']=DISABLED
+
         
-        else:
-            data=Label(frames,text="" , font=('arial',18,'bold'), width=15,fg='Gray')
-            data.grid(row=4,column=1,padx=15,pady=12,sticky=W)
-            data.config(text="enter detail properly")
+        groupname=Label(frames,text="Group adminid:",font=('arial',16,'bold'),bg='lightgray',width=13 ,fg="Green")
+        groupname.grid(row=1,column=0,padx=16,pady=10)
+        Groupentry=Entry(frames,textvariable=groupnval,bg='lightgray',fg="Green",bd=3,relief=RAISED,width=15,font=('arial',16,'italic'),highlightthickness=2,highlightcolor='blue')
+        Groupentry.grid(row=1,column=1)
+        if len(l)<=10:
+            data=Label(frames,text="" , font=('arial',14,'bold'), width=15,fg='Gray')
+            data.grid(row=i,column=2,padx=15,pady=12,sticky=W)
+            data.config(text=Groupentry.get())
+            i+=1
+            l.append(Groupentry.get())
+            # print(l)
 
     frames=Frame(root,bg='lightgreen')
-    frames.place(x=23,y=250,width=850,height=700)
+    frames.place(x=18,y=120,width=867,height=820)
 
     groupnval=StringVar()
 
-     #enter the name og group
-    groupname=Label(frames,text="Group adminID  : ",font=('arial',18,'bold'),bg='lightgray',width=15 ,fg="Green")
-    groupname.grid(row=1,column=0,padx=16,pady=10)
+    # add more phone number option
+    btn=Button(frames,text='Add more number',command=morenumber, width=18,font=('times new roman',12,'bold'),bg='blue',fg='white',activebackground='white',activeforeground='blue',highlightthickness=2 , highlightcolor='black')
+    btn.grid(row=1,column=1,sticky=E)
 
-    Groupentry=Entry(frames,textvariable=groupnval,bg='lightgray',fg="Green",bd=3,relief=RAISED,width=16,font=('arial',18,'italic'),highlightthickness=2,highlightcolor='blue')
-    Groupentry.grid(row=1,column=1)
+     #enter the name og group
+    groupname=Label(frames,text="Group adminID:",font=('arial',16,'bold'),bg='lightgray',width=13 ,fg="Green")
+    groupname.grid(row=2,column=0,padx=16,pady=10)
+
+    Groupentry=Entry(frames,textvariable=groupnval,bg='lightgray',fg="Green",bd=3,relief=RAISED,width=15,font=('arial',16,'italic'),highlightthickness=2,highlightcolor='blue')
+    Groupentry.grid(row=2,column=1)
 
     # enter the message u need to send
-    message=Label(frames,text="Message Send : ",font=('arial',18,'bold'),bg='lightgray',width=15 ,fg="Green")
-    message.grid(row=2,column=0,padx=10,pady=16)
+    message=Label(frames,text="Message Send : ",font=('arial',16,'bold'),bg='lightgray',width=13 ,fg="Green")
+    message.grid(row=3,column=0,padx=10,pady=16)
 
-    messageentry=Text(frames,font=('arial',18,'italic'),bg='lightgray',width=16,height=7,fg='green',highlightthickness=2,highlightcolor='blue',bd=3,relief=RAISED)
-    messageentry.grid(row=2,column=1)
+    messageentry=Text(frames,font=('arial',16,'italic'),bg='lightgray',width=15,height=7,fg='green',highlightthickness=2,highlightcolor='blue',bd=3,relief=RAISED)
+    messageentry.grid(row=3,column=1)
 
     # send button mssg
-    btn=Button(frames,text='Send Group Message',command=group, width=18,font=('times new roman',15,'bold'),bg='blue',fg='white',activebackground='white',activeforeground='blue',highlightthickness=2 , highlightcolor='black')
-    btn.grid(row=3,column=1,sticky=W)
+    btns=Button(frames,text='Send Group Message',command=group, width=15,font=('times new roman',14,'bold'),bg='blue',fg='white',activebackground='white',activeforeground='blue',highlightthickness=2 , highlightcolor='black')
+    btns.grid(row=5,column=1,sticky=W)
 
 # personal list mssg instantly
 def personallistmssg():
@@ -204,7 +281,7 @@ def personallistmssg():
             # print(l)
 
     frames=Frame(root,bg='lightgreen')
-    frames.place(x=23,y=250,width=850,height=720)
+    frames.place(x=18,y=120,width=867,height=820)
     
     # variable of phone number
     phoneval=StringVar()
@@ -233,7 +310,7 @@ def personallistmssg():
 
 # frames
 frames=Frame(root,bd=3,relief=RAISED,bg='lightgreen')
-frames.place(x=10,y=68,width=880,height=925)
+frames.place(x=10,y=68,width=880,height=875)
 
 # button for mssg sending selection
 
