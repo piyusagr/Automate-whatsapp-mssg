@@ -1,6 +1,8 @@
 from tkinter import *
 import pywhatkit as pwk
 from tkinter import ttk 
+import sys,os
+import phonenumbers
 
 root=Tk()
 root.title("Automate Whatsapp")
@@ -13,6 +15,15 @@ titlename=Label(root,text="AUTO WHATSAPP MESSAGE SEND", font=('arial black',19,'
                 bg='grey',fg='green',bd=5,relief=RIDGE,width=35)
 titlename.pack(side=TOP)
 
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS2
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 #  whatsapp message send personally at given time
 def mssgpersonal():
@@ -70,6 +81,9 @@ def mssgpersonal():
 
     phoneentry=Entry(frames,textvariable=phoneval,bg='lightgray',fg="Green",bd=3,relief=RAISED,width=15,font=('arial',16,'italic'),highlightthickness=2,highlightcolor='blue')
     phoneentry.grid(row=2,column=1)
+    number=phonenumbers.parse(phoneentry)
+    if not phonenumbers.is_valid_number(number):
+
 
     # enter the message u need to send
     message=Label(frames,text="Message Send : ",font=('arial',16,'bold'),bg='lightgray',width=13 ,fg="Green")
@@ -320,10 +334,12 @@ btn.grid(row=0,column=0,sticky=W)
 btn=Button(frames,text='Personal MssgInstant' ,command=personallistmssg, width=16,font=('times new roman',12,'bold'),bg='lightgray',fg='black',activebackground='lightgray',activeforeground='black',highlightthickness=2 , highlightcolor='black')
 btn.grid(row=0,column=1,sticky=W)
 
+
 btn=Button(frames,text='Group Message ',command=groupmssgtime, width=14,font=('times new roman',12,'bold'),bg='lightgray',fg='black',activebackground='lightgray',activeforeground='black',highlightthickness=2 , highlightcolor='black')
 btn.grid(row=0,column=2,sticky=W)
 
 btn=Button(frames,text='Group Mssginstanly ',command=groupmssgtimeinstant, width=16,font=('times new roman',12,'bold'),bg='lightgray',fg='black',activebackground='lightgray',activeforeground='black',highlightthickness=2 , highlightcolor='black')
 btn.grid(row=0,column=3,sticky=W)
+
 
 root.mainloop()

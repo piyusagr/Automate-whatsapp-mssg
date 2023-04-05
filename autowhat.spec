@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['--D:\\automate whatsapp mssg\\automate whatsapp mssg\\autowhat.py'],
+    ['autowhat.py'],
     pathex=[],
     binaries=[],
     datas=[],
